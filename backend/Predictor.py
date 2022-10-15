@@ -5,6 +5,7 @@ from torchvision.models.detection import fasterrcnn_resnet50_fpn
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 import numpy as np
 
+
 class Predictor():
     def __init__(self, model_path, score_threshold):
         self.model = fasterrcnn_resnet50_fpn(pretrained=False)

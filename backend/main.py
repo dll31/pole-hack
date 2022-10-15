@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, jsonify
+from flask import Flask, Response, render_template, jsonify, request
 import threading
 from grabThread import *
 import json
@@ -16,6 +16,49 @@ app = Flask(__name__, template_folder=template_folder)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/api/query', methods=['POST'])
+def get_query_from_react():
+    data = request.get_json()
+    print(data)
+    return data
+
+
+def plot_data_gen():
+    while True:
+        time.sleep(0.1)
+        json_data = json.dumps(
+            {
+                "time": datetime.now().strftime("%H:%M:%S"),
+                "value": random.random() * 100,
+            }
+        )
+
+        return json_data
+
+
+@app.route("/plot_data")
+def plot_data():
+    return plot_data_gen()
+
+
+def plot_an_data_gen():
+    while True:
+        time.sleep(0.1)
+        json_data = json.dumps(
+            {
+                "time": datetime.now().strftime("%H:%M:%S"),
+                "value": random.random() * 20,
+            }
+        )
+
+        return json_data
+
+
+@app.route("/plot_an_data")
+def plot_an_data():
+    return plot_an_data_gen()
 
 
 @app.route("/plot_data")
