@@ -34,7 +34,6 @@ def plot_data_gen():
                 "value": random.random() * 100,
             }
         )
-
         return json_data
 
 
@@ -61,17 +60,6 @@ def plot_an_data():
     return plot_an_data_gen()
 
 
-@app.route("/plot_data")
-def plot_data():
-    json_data = json.dumps(
-        {
-            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "value": random.random() * 100,
-        }
-    )
-    return json_data
-
-
 def gen():
     vs = WebcamVideoStream(src='video.mp4').start()
     mt = ModelThread(vs=vs).start()
@@ -85,12 +73,7 @@ def gen():
         if mt.flag:
             ds = mt.read()
             if ds.frame is not None:
-                f = open('test.txt', 'a')
-                f.write(array2string(ds.frame))
-                f.close()
                 rc, frame = cv2.imencode('.jpg', ds.frame)
-
-
                 if rc:
                     yield b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame.tobytes() + b'\r\n'
                 else:

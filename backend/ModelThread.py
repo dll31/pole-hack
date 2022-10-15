@@ -24,9 +24,8 @@ class ModelThread:
             if self.stopped:
                 return
             self.locker.acquire()
-            # self.ds.frame = self.vs.read()
             self.ds.frame = self.vs.read()
-            self.ds.frame = self.pr(cv2.resize(self.ds.frame, (1080, 720)))
+            # self.ds.frame = self.pr(cv2.resize(self.ds.frame, (1080, 720)))
             self.flag = True
 
     def start(self):
