@@ -1,22 +1,43 @@
 .mainBody {
-  width: 100%;
+  /* width: 100%; */
+  /* height: 70%;   */
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: left;   */
+  align-content: center;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+.stream {
+  left: 0px;
+  top: 0px; 
+  width: 45%;
+  height: 70%;
+  padding: 0;
+  margin: 0;
+
 }
 
 .video {
   left: 0px;
   top: 0px; 
-  width: 50%;
-  height: 70%;
+  width: 1080px;
+  height: 720px
 }
 
 .plot {
   /* right: 0px;
   top: 0px;  */
-  width: 50%;
-  height: 50%;
+  /* width: 45%; */
+  /* height: 50%; */
+  margin-bottom: 1em;
+}
+
+.title {
+  text-align: center;
+  padding-left: 2em;
+  font-size: 1.2em; 
 }
 
 .OperatorFields {
@@ -25,3 +46,11 @@
   left: 0px;
   size: 3em;
 }
+
+.plot_btn {
+  margin-left: 4em;
+}
+
+/* CustomSelect {
+  padding-top: 20em;
+} */

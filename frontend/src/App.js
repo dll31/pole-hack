@@ -41,6 +41,19 @@ function App() {
 	}, [])
 
 
+	const updateData = (state) => {
+		setData(state);
+	}
+
+	const updateAnData = (state) => {
+		setAnData(state);
+	}
+
+	const rrr = () => {
+
+	}
+
+
 	const handlePostQuery = (query) => {
 
 		query.preventDefault()
@@ -64,21 +77,39 @@ function App() {
 		}
 	}	
 
-
 	return (
 		<div className="App">
 			<div className='mainBody'>
+
+
 				<div className="stream">
-					<img src="/video_feed" alt="video" width='1080' height='720'/>
+					<img className='video' src="/video_feed" alt="video"/>
+					<div className="OperatorFields">
+						<form>
+							<p>Now ore limit is: {tempMaxNonOversizedOre}</p>
+
+							
+							<input 
+								ref={inputRef}
+								type="text"
+								onChange={event => setMaxNonOversizedOre(event.target.value)}
+							>
+								
+							</input>
+
+							<button onClick={handlePostQuery}>Set ore limit</button>
+
+						</form>
+					</div>
 				</div>
 				
 				<div className='plots'>
 				<div className='plot'>
-					<MyLineChart chart={{data: data}}/>
+					<MyLineChart chart={{data: data, onClear: updateData, title: "Title1"}}/>
 				</div>
 
 				<div className='plot'>
-					<MyLineChart chart={{data: anData}}/>
+					<MyLineChart chart={{data: anData, onClear: updateAnData, title: "Title2"}}/>
 				</div>
 				</div>
 				
@@ -91,19 +122,7 @@ function App() {
 			</div> */}
 		
 
-			<div className="OperatorFields">
-				<form>
-					<p>Now ore limit is: {tempMaxNonOversizedOre}</p>
-					<input 
-						ref={inputRef}
-						type="text"
-						onChange={event => setMaxNonOversizedOre(event.target.value)}
-					>	
-					</input>
-
-					<button onClick={handlePostQuery}>Set ore limit</button>
-				</form>
-			</div>
+			
 
 		</div>
 	);
