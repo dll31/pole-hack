@@ -22,11 +22,11 @@ const MyLineChart = (props) => {
         }}
         >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" />
+        <XAxis dataKey={props.chart.xaxis} />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey={props.chart.line} stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
             <button 
                 className='plot_btn'

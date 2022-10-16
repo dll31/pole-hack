@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import MyLineChart from './lineChartComponent';
+import MyPercentAreaChart from './percentAreaChartComponent';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 			try {
 			const res = await axios.get('/plot_data');
 			setData(data => [...data, res.data]);
+			// console.log(data);
 			} catch (error) {
 			console.log(error);
 			}
@@ -25,6 +27,7 @@ function App() {
 			try {
 				const res = await axios.get('/plot_an_data');
 				setAnData(anData => [...anData, res.data]);
+				// console.log(anData);
 			} catch (error) {
 				console.log(error);
 			}
@@ -33,7 +36,7 @@ function App() {
 
 		const id = setInterval(() => {
 		  fetchData(); 
-		}, 200);
+		}, 2000);
 	  
 		fetchData();
 	  
@@ -105,11 +108,11 @@ function App() {
 				
 				<div className='plots'>
 				<div className='plot'>
-					<MyLineChart chart={{data: data, onClear: updateData, title: "Title1"}}/>
+					<MyPercentAreaChart chart={{data: data}} /> 
 				</div>
 
-				<div className='plot'>
-					<MyLineChart chart={{data: anData, onClear: updateAnData, title: "Title2"}}/>
+				<div className='plot' >
+					<MyLineChart chart={{data: anData, onClear: updateAnData, title: "Title2", xaxis: "time", line: "max_size"}}/>
 				</div>
 				</div>
 				

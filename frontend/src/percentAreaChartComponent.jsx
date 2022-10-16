@@ -1,57 +1,57 @@
 import React, { PureComponent } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const data = [
-  {
-    month: '2015.01',
-    a: 4000,
-    b: 2400,
-    c: 2400,
-  },
-  {
-    month: '2015.02',
-    a: 3000,
-    b: 1398,
-    c: 2210,
-  },
-  {
-    month: '2015.03',
-    a: 2000,
-    b: 9800,
-    c: 2290,
-  },
-  {
-    month: '2015.04',
-    a: 2780,
-    b: 3908,
-    c: 2000,
-  },
-  {
-    month: '2015.05',
-    a: 1890,
-    b: 4800,
-    c: 2181,
-  },
-  {
-    month: '2015.06',
-    a: 2390,
-    b: 3800,
-    c: 2500,
-  },
-  {
-    month: '2015.07',
-    a: 3490,
-    b: 4300,
-    c: 2100,
-  },
-];
+// const data = [
+//   {
+//     month: '2015.01',
+//     a: 4000,
+//     b: 2400,
+//     c: 2400,
+//   },
+//   {
+//     month: '2015.02',
+//     a: 3000,
+//     b: 1398,
+//     c: 2210,
+//   },
+//   {
+//     month: '2015.03',
+//     a: 2000,
+//     b: 9800,
+//     c: 2290,
+//   },
+//   {
+//     month: '2015.04',
+//     a: 2780,
+//     b: 3908,
+//     c: 2000,
+//   },
+//   {
+//     month: '2015.05',
+//     a: 1890,
+//     b: 4800,
+//     c: 2181,
+//   },
+//   {
+//     month: '2015.06',
+//     a: 2390,
+//     b: 3800,
+//     c: 2500,
+//   },
+//   {
+//     month: '2015.07',
+//     a: 3490,
+//     b: 4300,
+//     c: 2100,
+//   },
+// ];
 
 const toPercent = (decimal, fixed = 0) => `${(decimal * 100).toFixed(fixed)}%`;
 
 const getPercent = (value, total) => {
   const ratio = total > 0 ? value / total : 0;
 
-  return toPercent(ratio, 2);
+  return toPercent(ratio, 0);
 };
 
 const renderTooltipContent = (o) => {
@@ -88,18 +88,24 @@ const MyPercentAreaChart = (props) => {
             bottom: 0,
         }}
         >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis tickFormatter={toPercent} />
+        <CartesianGrid strokeDasharray="3 4" />
+        <XAxis dataKey="time" />
+        {/* <YAxis tickFormatter={toPercent} /> */}
+        <YAxis/>
         <Tooltip content={renderTooltipContent} />
-        <Area type="monotone" dataKey="a" stackId="1" stroke="#8884d8" fill="#8884d8" />
-        <Area type="monotone" dataKey="b" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-        <Area type="monotone" dataKey="c" stackId="1" stroke="#ffc658" fill="#ffc658" />
-        <Area type="monotone" dataKey="d" stackId="1" stroke="#8884d8" fill="#8884d8" />
-        <Area type="monotone" dataKey="e" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-        <Area type="monotone" dataKey="f" stackId="1" stroke="#ffc658" fill="#ffc658" />
-        <Area type="monotone" dataKey="g" stackId="1" stroke="#8884d8" fill="#8884d8" />
+        {/* <Tooltip/> */}
+        <Legend />
+        <Area type="monotone" dataKey="0" stackId="1" stroke="#8884d8" fill="#8884d8" />
+        <Area type="monotone" dataKey="1" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
+        <Area type="monotone" dataKey="2" stackId="1" stroke="#ffc658" fill="#ffc658" />
+        <Area type="monotone" dataKey="3" stackId="1" stroke="#d00" fill="#d00" />
+        <Area type="monotone" dataKey="4" stackId="1" stroke="#0f0" fill="#0f0" />
+        <Area type="monotone" dataKey="5" stackId="1" stroke="#00a" fill="#00a" />
+        <Area type="monotone" dataKey="6" stackId="1" stroke="#33cc11" fill="#33cc11" />
         
         </AreaChart>
     );
 }
+
+
+export default MyPercentAreaChart;
