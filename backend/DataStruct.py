@@ -1,10 +1,7 @@
 
 
-class DataStruct:
-    def __init__(self):
-        self.frame = None
-        self.json_data = None
-
-    def update(self, frame, json_data):
+class Ds:
+    def __init__(self, frame, data, max_object):
         self.frame = frame
-        self.json_data = json_data
+        self.data = data
+        self.max_size = max_object

@@ -1,17 +1,24 @@
 from flask import Flask, Response, render_template, jsonify, request
-import threading
-from grabThread import *
+# import threading
+
 import json
 from datetime import datetime
 import random
-from DataStruct import DataStruct
+# import pandas as pd
+# from DataStruct import DataStruct
 from ModelThread import ModelThread
-import matplotlib.pyplot as plt
-from numpy import array2string
+import cv2
+# import matplotlib.pyplot as plt
+# from numpy import array2string
+from grabThread import WebcamVideoStream
+import time
+
 
 template_folder = 'templates'
 app = Flask(__name__, template_folder=template_folder)
-
+data = None
+max_object = None
+size = 30
 
 @app.route('/')
 def index():
@@ -20,9 +27,9 @@ def index():
 
 @app.route('/api/query', methods=['POST'])
 def get_query_from_react():
-    data = request.get_json()
-    print(data)
-    return data
+    _data = request.get_json()
+    print(_data)
+    return _data
 
 
 def plot_data_gen():
@@ -39,17 +46,15 @@ def plot_data_gen():
 
 @app.route("/plot_data")
 def plot_data():
-    return plot_data_gen()
+    print(data)
+    return json.dumps(data)
 
 
 def plot_an_data_gen():
     while True:
-        time.sleep(0.1)
+        time.sleep(2)
         json_data = json.dumps(
-            {
-                "time": datetime.now().strftime("%H:%M:%S"),
-                "value": random.random() * 20,
-            }
+            max_object
         )
 
         return json_data
@@ -57,12 +62,14 @@ def plot_an_data_gen():
 
 @app.route("/plot_an_data")
 def plot_an_data():
-    return plot_an_data_gen()
+    print(max_object)
+    return json.dumps(max_object)
 
 
 def gen():
+    global data, max_object
     vs = WebcamVideoStream(src='video.mp4').start()
-    mt = ModelThread(vs=vs).start()
+    mt = ModelThread(vs=vs, size=size).start()
     # fps = vs.get_framerate()
     # print(fps)
     # time.sleep(0.1)
@@ -70,10 +77,13 @@ def gen():
 
 
     while True:
+        if mt.size != size:
+            mt.size = size
         if mt.flag:
-            ds = mt.read()
-            if ds.frame is not None:
-                rc, frame = cv2.imencode('.jpg', ds.frame)
+            frame, data, max_object = mt.read()
+            if frame is not None:
+
+                rc, frame = cv2.imencode('.jpg', frame)
                 if rc:
                     yield b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame.tobytes() + b'\r\n'
                 else:
@@ -89,5 +99,5 @@ def video_feed():
     )
 
 
-if __name__ == "__main__":
-    app.run(debug=True, use_debugger=True, use_reloader=False)
+# if __name__ == "__main__":
+#     app.run(debug=True, use_debugger=True, use_reloader=False)
